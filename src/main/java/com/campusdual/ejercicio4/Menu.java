@@ -28,7 +28,6 @@ public class Menu {
         HashMap<String,Diet> dietas =new HashMap<>();
         Diet dieta=new Diet();
         Scanner myObj = new Scanner(System.in);
-        String maxcal;
         String cs;
     do{
         out.println("-1. Crear/reiniciar dieta: crea o remplaza la dieta inicial\n" +
@@ -39,10 +38,11 @@ public class Menu {
                         "\t\t-b. Alimento existente\n" +
                         "-4. Salir");
         cs = myObj.nextLine();
+        String nxtline="";
             switch (cs) {
                 case "1":
                     out.println("Introduce el nombre de la dieta a añadir:");
-                    String nxtline =myObj.nextLine();
+                    nxtline =myObj.nextLine();
                     dietas.put(nxtline,get_diet_input());
                     break;
                 case "2":
@@ -50,9 +50,10 @@ public class Menu {
                     break;
                 case "3":
                     out.println("Introduce dieta a la que añadir o consultar alimentos:");
+                    show_dietas(dietas);
                     nxtline =myObj.nextLine();
                     if (patrn.matcher(nxtline).matches()) {
-                        dieta=dietas.get(Integer.parseInt(nxtline));
+                        dieta=dietas.get(nxtline);
                     }
                     gest_alimentos(dieta);
                     break;
@@ -103,17 +104,21 @@ public class Menu {
         Scanner myObj = new Scanner(System.in);
         int maxcal=0;
         String res;
+
+        do{
             out.println("Crear/reiniciar dieta: \n" +
                     "\t\t-a. Sin limite\n" +
                     "\t\t-b. Por calorías\n" +
                     "\t\t-c. Por macronutrientes\n" +
                     "\t\t-d. Por datos personales\n" +
+                    "\t\t-s. salir\n" +
                     "\t\t-r. reiniciar");
 
             res = myObj.nextLine();
             switch (res) {
                 case "a":
                     dieta = new Diet();
+                    res="s";
                     break;
                 case "b":
                     do {
@@ -126,23 +131,31 @@ public class Menu {
 
                     dieta = new Diet(maxcal);
                     out.println("cals maximas "+dieta.getMaxcal());
+                    res="s";
                     break;
                 case "c":
                     ArrayList<Integer> result_macros = get_macros();
                     dieta = new Diet(result_macros.get(0), result_macros.get(1), result_macros.get(2));
+                    res="s";
                     break;
                 case "d":
                     ArrayList<String> result_data = get_data();
                     dieta = new Diet(Boolean.parseBoolean(result_data.get(0)), Integer.parseInt(result_data.get(1)),
                             Integer.parseInt(result_data.get(2)), Integer.parseInt(result_data.get(3)));
+                    res="s";
                     break;
                 case "r":
+                    dieta=new Diet();
+                    break;
+                case "s":
                     dieta=new Diet();
                     break;
                 default:
                     out.println("respuesta erronea, el formato de la opcion es una letra unica, eg: 'a'");
                     break;
             }
+
+        }while(!res.equalsIgnoreCase("s"));
 
         return dieta;
     }

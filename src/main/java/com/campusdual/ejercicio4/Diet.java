@@ -68,9 +68,19 @@ public class Diet {
         if(maxcal!=null){
             out.println("\ncalorias maximas: "+maxcal);
         }
-        out.println("macros maximas totales: "+ this.getMaxCarbs()+"carbs, "+ this.getMaxProtein()+"prote,"+this.getMaxFats()+"grasa");
-        out.println("calorias totales: "+ this.getTotalCals());
-        out.println("macros totales actuales: "+ this.getTotalCarbs()+"carbs, "+ this.getTotalProt()+"prote,"+this.getTotalGras()+"grasa\n");
+        if((this.getMaxFats()!=null) && (this.getMaxProtein()!=null) && (this.getMaxCarbs()!=null)) {
+            out.println("macros maximas totales: " + this.getMaxCarbs() + "carbs, " +
+                    this.getMaxProtein() + "prote," + this.getMaxFats() + "grasa");
+            out.println("calorias totales: " + this.getTotalCals());
+            out.println("macros totales actuales: " + this.getTotalCarbs() + "carbs, " +
+                    this.getTotalProt() + "prote," + this.getTotalGras() + "grasa\n");
+        }
+        if(maxcal==null) {
+            out.println("Dieta sin limite de calorias");
+        }
+        if((this.getMaxFats()!=null) && (this.getMaxProtein()!=null) && (this.getMaxCarbs()!=null) && maxcal==null) {
+            out.println("Dieta por limite de macros");
+        }
     }
 
     public boolean check_dieta(String nom, int c, int p, int g){
