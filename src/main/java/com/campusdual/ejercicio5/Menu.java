@@ -31,13 +31,14 @@ public class Menu {
         String cs;
     do{
         out.println("-1. Crear/reiniciar dieta: crea o remplaza la dieta inicial\n" +
-                        "-2. Mostrar información: muestra calorías y macronutrientes de la dieta\n" +
-                        "-3. Agregar alimento: agrega un alimento a la dieta actual y añade ese alimento " +
-                        "a la lista de alimentos disponible\n" +
-                        "\t\t-a. Nuevo alimento\n" +
-                        "\t\t-b. Alimento existente\n" +
-                        "-4. Salir");
+                "-2. Mostrar información: muestra calorías y macronutrientes de la dieta y permite editarla\n" +
+                "-3. Agregar alimento: agrega un alimento a la dieta actual y añade ese alimento " +
+                "a la lista de alimentos disponible\n" +
+                "\t\t-a. Nuevo alimento\n" +
+                "\t\t-b. Alimento existente\n" +
+                "-4. Salir");
         cs = myObj.nextLine();
+        String res="";
         String nxtline="";
             switch (cs) {
                 case "1":
@@ -46,11 +47,11 @@ public class Menu {
                     dietas.put(nxtline,get_diet_input());
                     break;
                 case "2":
-                    show_dietas(dietas);
+                    manage_diets(dietas);
                     break;
                 case "3":
-                    out.println("Introduce dieta a la que añadir o consultar alimentos:");
                     show_dietas(dietas);
+                    out.println("Introduce dieta a la que añadir o consultar alimentos:");
                     nxtline =myObj.nextLine();
                     if (patrn.matcher(nxtline).matches()) {
                         dieta=dietas.get(nxtline);
@@ -69,6 +70,33 @@ public class Menu {
     }
 
 
+    private static void manage_diets(HashMap<String, Diet> dietas){
+        Scanner myObj = new Scanner(System.in);
+        String res="";
+        String nxtline="";
+        Diet dieta= new Diet();
+        do{
+            out.println("\nEscoge opcion:" +
+                    "\na. mostrar dietas" +
+                    "\nb. editar dietas" +
+                    "\ns. salir");
+            res = myObj.nextLine();
+
+            switch (res){
+                case "a":
+                    show_dietas(dietas);
+                case "b":
+                    out.println("\nIntroduce el nombre de la dieta a editar(s para salir):");
+                    res = myObj.nextLine();
+                    dieta = dietas.get(res);
+                    dieta.editar_dieta();
+                    break;
+                case "s":
+                    break;
+            }
+        }while(!res.equalsIgnoreCase("s"));
+
+    }
     private static ArrayList<Integer> get_macros(){
         Scanner myObj = new Scanner(System.in);
         ArrayList<Integer> custom_macs=new ArrayList<>();
@@ -162,7 +190,7 @@ public class Menu {
 
     private static void gest_alimentos(Diet dieta){
         Scanner myObj = new Scanner(System.in);
-        out.println("Introduce operacion a realizar:"+
+        out.println("Introduce operacion a realizar:\n"+
                 "\t\t-a. Nuevo alimento\n" +
                 "\t\t-b. Alimento existente\n");
         String nxtline =null;
@@ -186,7 +214,7 @@ public class Menu {
     }
 
     public static void show_dietas(HashMap<String, Diet> dietas){
-        out.println("Estas son las dietas actuales:");
+        out.println("\nEstas son las dietas actuales:");
             dietas.forEach((clave,valor) ->{
                 out.println("Dieta: "+ clave);
                 out.println("valores:");

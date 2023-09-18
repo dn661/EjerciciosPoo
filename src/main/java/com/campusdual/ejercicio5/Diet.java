@@ -140,6 +140,46 @@ public class Diet {
         return tgras;
     }
 
+    public Diet editar_dieta(){
+        String res="";
+        Scanner myObj = new Scanner(System.in);
+        do{
+            out.println("\nIntroduce lo que quieres editar:\n"
+                    +"\na. Editar calorias"
+                    +"\nb. Editar macros"
+                    +"\nc. Editar datos personales"
+                    +"\ns. Salir");
+            res = myObj.nextLine();
+
+            switch (res){
+                case "a":
+                    out.println("\nIntroduce las nuevas calorías totales:\n");
+                    if (myObj.hasNextInt()){
+                        this.setMaxcal(myObj.nextInt());
+                    }
+                    break;
+                case "b":
+                    out.println("\nIntroduce las nuevas macros totales:\n");
+                        out.println("\nIntroduce las nuevas carbos:\n");
+                        if (myObj.hasNextInt()){
+                            this.setMaxCarbs(myObj.nextInt());
+                        }
+                    out.println("\nIntroduce las nuevas protes:\n");
+                    if (myObj.hasNextInt()){
+                        this.setMaxProtein(myObj.nextInt());
+                    }
+                    out.println("\nIntroduce las nuevas grasas:\n");
+                    if (myObj.hasNextInt()){
+                        this.setMaxFats(myObj.nextInt());
+                    }
+                    break;
+                case "s":
+                    break;
+            }
+
+        }while(!res.equalsIgnoreCase("s"));
+        return this;
+    }
 
     public void muestra_alimentos(){
         out.println("Alimentos actuales:");
