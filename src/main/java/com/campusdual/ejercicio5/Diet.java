@@ -173,6 +173,10 @@ public class Diet {
                         this.setMaxFats(myObj.nextInt());
                     }
                     break;
+                case "c":
+                    out.println("\nIntroduce los nuevos datos personales:\n");
+                    
+                    break;
                 case "s":
                     break;
             }

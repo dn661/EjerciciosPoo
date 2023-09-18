@@ -73,7 +73,6 @@ public class Menu {
     private static void manage_diets(HashMap<String, Diet> dietas){
         Scanner myObj = new Scanner(System.in);
         String res="";
-        String nxtline="";
         Diet dieta= new Diet();
         do{
             out.println("\nEscoge opcion:" +
@@ -85,11 +84,19 @@ public class Menu {
             switch (res){
                 case "a":
                     show_dietas(dietas);
+                    break;
                 case "b":
                     out.println("\nIntroduce el nombre de la dieta a editar(s para salir):");
                     res = myObj.nextLine();
-                    dieta = dietas.get(res);
-                    dieta.editar_dieta();
+                    if (res.equalsIgnoreCase("s")) {
+                        break;
+                    }
+                    if(dietas.containsKey(res)) {
+                        dieta = dietas.get(res);
+                        dieta.editar_dieta();
+                    }else{
+                        out.println("No existe esa dieta con ese nombre");
+                    }
                     break;
                 case "s":
                     break;
